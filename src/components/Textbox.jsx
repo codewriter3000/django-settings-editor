@@ -7,6 +7,7 @@ export default ({defaultValue, disabled, id, name, label}) => {
                     {label}
                 </label>
                 <input
+                    spellCheck='false'
                     type='text'
                     disabled={disabled}
                     id={id}
