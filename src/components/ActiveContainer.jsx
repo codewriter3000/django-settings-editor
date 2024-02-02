@@ -1,15 +1,16 @@
-import SettingsTable from "./SettingsTable.jsx";
-import {SettingsContext} from "../App.jsx";
-import {useContext} from "react";
-import EditSettings from "./EditSettings.jsx";
+import React from 'react';
 
-// eslint-disable-next-line react/display-name,react/prop-types
-export default () => {
-    const context = useContext(SettingsContext);
-    return (
-        <div>
-            {context.activeControl === 'SettingsTable' ? <SettingsTable/> : <EditSettings/>}
+import {SettingsTable} from './SettingsTable.jsx';
+import {SettingsContext} from '../App.jsx';
+import {useContext} from 'react';
+import {EditSettings} from './EditSettings.jsx';
 
-        </div>
-    )
-}
+export const ActiveContainer = () => {
+	const context = useContext(SettingsContext);
+	return (
+		<div>
+			{context.activeControl === 'SettingsTable' ? <SettingsTable/> : <EditSettings/>}
+
+		</div>
+	);
+};
