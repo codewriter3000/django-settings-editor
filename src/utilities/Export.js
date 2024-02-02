@@ -12,18 +12,16 @@ const exportSettings = (settings) => {
 			case 'ALLOWED_HOSTS':
 			case 'INSTALLED_APPS':
 			case 'MIDDLEWARE':
-				// eslint-disable-next-line no-case-declarations
 				output_str = `${key} = [`;
 				value.forEach((element) => {
 					output_str += `${element}, `;
 				});
-				// eslint-disable-next-line no-unused-vars
 				output_str += ']';
 				console.log(output_str);
 				break;
 
 
-				// object of named first-order objects
+			// object of named first-order objects
 			case 'DATABASES':
 				output_str = '{';
 				for(const [k, v] of Object.entries(value)){
@@ -38,11 +36,10 @@ const exportSettings = (settings) => {
 				break;
 
 
-				// array of first-order objects
+			// array of first-order objects
 			case 'AUTH_PASSWORD_VALIDATORS':
 				output_str = '[';
-				// eslint-disable-next-line no-unused-vars
-				for(const [_, v] of Object.entries(value)){
+				for(const [, v] of Object.entries(value)){
 					output_str += '{';
 					for(const [k2, v2] of Object.entries(v)){
 						output_str += `"${k2}": "${v2}", `;

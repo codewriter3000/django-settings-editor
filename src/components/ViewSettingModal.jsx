@@ -10,18 +10,55 @@ export const ViewSettingModal = ({propertyName, propertyValue}) => {
 	const context = useContext(SettingsContext);
 	const cancelButtonRef = useRef(null);
 
-	const indentObject = (obj) => {
-		let temp = JSON.stringify(obj);
-		for(let i = 0; i < JSON.stringify(obj).length; i++){
-			console.log(JSON.stringify(obj)[i] === '[');
-			if(JSON.stringify(obj)[i] === '['){
-				temp = temp.slice(0, i) + '\n' + JSON.stringify(obj).slice(i);
-			}
-			if(JSON.stringify(obj)[i] === ','){
-				temp = temp.slice(0, i+1) + '\n' + JSON.stringify(obj).slice(i+1);
-			}
+	const ValueList = ({propertyName, propertyValue}) => {
+		switch (propertyName) {
+		case 'ALLOWED_HOSTS':
+		case 'INSTALLED_APPS':
+		case 'MIDDLEWARE':
+			return (
+				<div>
+					{propertyValue.map(element => {
+						return (<p key={element}>{element}</p>);
+					})}
+				</div>
+			);
+		case 'AUTH_PASSWORD_VALIDATORS':
+			return (
+				<div>
+					{propertyValue.map(element => {
+						return (<p key={element.NAME}>{element.NAME}</p>);
+					})}
+				</div>
+			);
+		case 'DATABASES':
+			return (
+				<div>
+					{Object.entries(propertyValue['default']).map(([k, v], key) => {
+						return (<p key={key}>{k}: {v}</p>);
+					})}
+				</div>
+			);
+		case 'TEMPLATES':
+			console.log(JSON.stringify(propertyValue));
+			// eslint-disable-next-line no-case-declarations
+			const template = propertyValue[0];
+			return (
+				<div>
+					<p>BACKEND: {template['BACKEND']}</p>
+					<p>DIRS: {template['DIRS']}</p>
+					{Object.entries(template['OPTIONS']).map(([k, v], key) => {
+						console.log(`${k}: ${v}`);
+						return (<div key={key}>{k.toUpperCase()}:
+							{v.map(value => {
+								return (
+									<p key={value}>- {value}</p>
+								);
+							})}
+						</div>);
+					})}
+				</div>
+			);
 		}
-		return temp;
 	};
 
 	return (
@@ -55,22 +92,13 @@ export const ViewSettingModal = ({propertyName, propertyValue}) => {
 								<div className="bg-gray-800 px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
 									<div className="sm:flex sm:items-start">
 										<div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-											<Dialog.Title as="h3"
-												className="text-base font-semibold leading-6 text-gray-400">
+											<Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-400">
 												{propertyName}
 											</Dialog.Title>
 											<div className="mt-2">
-												<p className="text-sm text-gray-500">
-													{indentObject(propertyValue)}
-												</p>
-												{/* eslint-disable-next-line react/prop-types */}
-												{/*{propertyValue.map(value => {*/}
-												{/*    return (*/}
-												{/*        <p key={value} className="text-sm text-gray-500">*/}
-												{/*            {value}*/}
-												{/*        </p>*/}
-												{/*    )*/}
-												{/*})}*/}
+												<div className="text-sm text-gray-500">
+													<ValueList propertyName={propertyName} propertyValue={propertyValue}/>
+												</div>
 											</div>
 										</div>
 									</div>
@@ -84,7 +112,7 @@ export const ViewSettingModal = ({propertyName, propertyValue}) => {
 											setOpen(false);
 										}}
 									>
-                                        Close
+										Close
 									</button>
 								</div>
 							</Dialog.Panel>

@@ -17,6 +17,10 @@ export const EditableList = ({label, elements}) => {
 			<label className='font-medium block text-sm leading-6 text-gray-400'>{label}</label>
 			<div>
 				{elements.map((value, key) => {
+					const changeItem =  (e) => {
+						elements[key] = e.target.value;
+					};
+
 					const moveItemUp = (e) => {
 						e.preventDefault();
 						const temp = elements[key - 1];
@@ -53,6 +57,7 @@ export const EditableList = ({label, elements}) => {
 								type='text'
 								className="block w-full rounded-md border-0 py-1.5 bg-transparent text-gray-400 shadow-sm ring-1 ring-inset ring-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:bg-gray-700"
 								defaultValue={value}
+								onChange={changeItem}
 							/>
 							<div className='ml-4 flex space-x-2'>
 								<SecondaryButton

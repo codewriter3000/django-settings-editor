@@ -13,8 +13,6 @@ export const SettingsTable = () => {
 	const [modalKey, setModalKey] = useState();
 	const context = useContext(SettingsContext);
 
-	console.log(context);
-
 	return (
 		<div className='flex justify-center'>
 			<table
