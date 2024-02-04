@@ -1,4 +1,4 @@
-import React, {useCallback, useReducer} from 'react';
+import React from 'react';
 
 import {SecondaryButton} from './Button.jsx';
 import {useState} from 'react';
@@ -10,12 +10,6 @@ export const EditableList = ({label, elements}) => {
 	};
 
 	const [values, setValues] = useState([...elements]);
-
-	const onDeleteItem = useCallback(e => {
-		e.preventDefault();
-		console.log(e.target.value);
-		setValues(values.filter((_, index) => index !== e.target.value));
-	}, [values]);
 
 	return (
 		<>
@@ -43,7 +37,6 @@ export const EditableList = ({label, elements}) => {
 					const addItem = (e) => {
 						e.preventDefault();
 						setValues([...values.slice(0, key), '', ...values.slice(key)]);
-						// setElements(prevElements => [...prevElements.slice(0, key), '', ...prevElements.slice(key)]);
 					};
 
 					const moveItemDown = (e) => {

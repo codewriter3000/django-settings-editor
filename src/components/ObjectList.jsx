@@ -1,9 +1,14 @@
-import React from 'react';
+import React, {useContext, useState} from 'react';
 
 import {SecondaryButton} from './Button.jsx';
 import PropTypes from 'prop-types';
+import {SettingsContext} from '../App.jsx';
+import {ObjectConfigModal} from './ObjectConfigModal.jsx';
 
 export const ObjectList = ({label, elements}) => {
+	const context = useContext(SettingsContext);
+	const [modalKey, setModalKey] = useState('');
+
 	return (
 		<>
 			<table
@@ -20,13 +25,18 @@ export const ObjectList = ({label, elements}) => {
 						return (
 							<tr key={key} className='bg-white border-b dark:bg-gray-800 dark:border-gray-700'>
 								<td className='px-6 py-4'>{key}</td>
-								<td className='px-6 py-4'><SecondaryButton>Details</SecondaryButton></td>
+								<td className='px-6 py-4'><SecondaryButton onClick={(e) => {
+									e.preventDefault();
+									setModalKey(key);
+									context.toggleModal();
+								}}>Details</SecondaryButton></td>
 							</tr>
 						);
 					})}
 				</tbody>
 			</table>
-			<SecondaryButton className='mt-4'>Add {label}</SecondaryButton>
+			{context.modalIsOpen && <ObjectConfigModal configurations={elements[modalKey]}></ObjectConfigModal>}
+			{/*<SecondaryButton className='mt-4'>Add {label}</SecondaryButton>*/}
 		</>
 	);
 };

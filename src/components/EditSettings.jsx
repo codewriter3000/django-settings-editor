@@ -27,7 +27,7 @@ export const EditSettings = () => {
 							</div>
 						</div>
 						<div className='col-span-full'>
-							<EditableList label='Installed Apps' setElements={context.updateInstalledApps} elements={context.settings.INSTALLED_APPS}/>
+							<EditableList label='Installed Apps' elements={context.settings.INSTALLED_APPS}/>
 						</div>
 					</div>
 				</div>

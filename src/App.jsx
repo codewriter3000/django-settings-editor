@@ -79,17 +79,8 @@ const SettingsProvider = ({children}) => {
 		STATIC_ROOT: projectPath('staticfiles'),
 	});
 
-	const updateInstalledApps = (newList) => {
-		setSettings(prevSettings => {
-			return {
-				...prevSettings,
-				INSTALLED_APPS: newList
-			};
-		});
-	};
-
 	return (
-		<SettingsContext.Provider value={{settings, updateInstalledApps, modalIsOpen, toggleModal, activeControl, setActiveControl}}>
+		<SettingsContext.Provider value={{settings, modalIsOpen, toggleModal, activeControl, setActiveControl}}>
 			{children}
 		</SettingsContext.Provider>
 	);
