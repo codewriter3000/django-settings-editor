@@ -78,18 +78,18 @@ const SettingsProvider = ({children}) => {
 		STATIC_URL: '/static/',
 		STATIC_ROOT: projectPath('staticfiles'),
 	});
-	const modifySettings = (settingsChanges) => {
-		Object.keys(settings).forEach(key => {
-			Object.keys(settingsChanges).forEach(paramKey => {
-				if(key === paramKey){
-					settings[key] = settingsChanges[paramKey];
-				}
-			});
+
+	const updateInstalledApps = (newList) => {
+		setSettings(prevSettings => {
+			return {
+				...prevSettings,
+				INSTALLED_APPS: newList
+			};
 		});
 	};
 
 	return (
-		<SettingsContext.Provider value={{settings, modalIsOpen, toggleModal, activeControl, setActiveControl}}>
+		<SettingsContext.Provider value={{settings, updateInstalledApps, modalIsOpen, toggleModal, activeControl, setActiveControl}}>
 			{children}
 		</SettingsContext.Provider>
 	);

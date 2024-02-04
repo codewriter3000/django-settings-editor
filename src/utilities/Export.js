@@ -5,7 +5,7 @@ const exportSettings = (settings) => {
 			console.log(`${key} = ${value}`);
 		} else {
 			let output_str = '';
-			switch(key){
+			switch(key) {
 
 
 			// array of strings
@@ -21,12 +21,12 @@ const exportSettings = (settings) => {
 				break;
 
 
-			// object of named first-order objects
+				// object of named first-order objects
 			case 'DATABASES':
 				output_str = '{';
-				for(const [k, v] of Object.entries(value)){
+				for (const [k, v] of Object.entries(value)) {
 					output_str += `"${k}: {`;
-					for(const [k2, v2] of Object.entries(v)){
+					for (const [k2, v2] of Object.entries(v)) {
 						output_str += `"${k2}": "${v2}", `;
 					}
 					output_str += '}';
@@ -36,12 +36,12 @@ const exportSettings = (settings) => {
 				break;
 
 
-			// array of first-order objects
+				// array of first-order objects
 			case 'AUTH_PASSWORD_VALIDATORS':
 				output_str = '[';
-				for(const [, v] of Object.entries(value)){
+				for (const [, v] of Object.entries(value)) {
 					output_str += '{';
-					for(const [k2, v2] of Object.entries(v)){
+					for (const [k2, v2] of Object.entries(v)) {
 						output_str += `"${k2}": "${v2}", `;
 					}
 					output_str += '}, ';
@@ -49,6 +49,14 @@ const exportSettings = (settings) => {
 				output_str += ']';
 				console.log(output_str);
 				break;
+
+				// templates
+			case 'TEMPLATES':
+				output_str = '[{';
+				output_str += `'BACKEND': ${value.BACKEND}, 'DIRS': ${value.DIRS}, 'OPTIONS': {'context_processors': [`;
+				for (const [, v] of Object.entries(value)) {
+					output_str += `'${v}', `;
+				}
 			}
 		}
 	}
